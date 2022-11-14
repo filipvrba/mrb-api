@@ -1,0 +1,3 @@
+#!/bin/bash
+
+v watch -o dist/mrb_api run src/.
