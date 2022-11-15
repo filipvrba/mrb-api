@@ -16,3 +16,7 @@ fn new_app() &App {
     mut app := &App{}
     return app
 }
+
+pub fn (mut a App) before_request() {
+    a.add_header("Access-Control-Allow-Origin", "*")  
+}

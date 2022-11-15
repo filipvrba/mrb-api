@@ -6,6 +6,7 @@ module main
 #include "mruby.h"
 #include "mruby/compile.h"
 #include "mruby/string.h"
+#include "mruby/array.h"
 
 struct C.RClass {
 }
@@ -28,7 +29,7 @@ fn C.MRB_ARGS_NONE() Aspec
 // fn C.MRB_ARGS_REQ(n) Aspec
 fn C.MRB_ARGS_OPT(n_one Aspec) Aspec
 fn C.RSTRING_PTR(obj_str C.mrb_value) charptr
-// fn C.RARRAY_LEN(C.mrb_value) &i64
+fn C.RARRAY_LEN(C.mrb_value) int
 
 fn C.mrb_open() &C.mrb_state
 fn C.mrb_load_string(mrb &C.mrb_state, s &char) C.mrb_value
@@ -45,19 +46,20 @@ fn C.mrb_float_p(C.mrb_value) bool
 fn C.mrb_float(C.mrb_value) f32
 fn C.mrb_array_p(C.mrb_value) bool
 fn C.mrb_array_p(C.mrb_value) bool
+fn C.mrb_ary_ref(C.mrb_state, C.mrb_value, int) C.mrb_value
 
 fn mrb_code(mrb_code string) string {
 	mut mrb := C.mrb_open()
 	mut mrb_result := ""
 	
 	mrb_content := C.mrb_load_string(mrb, mrb_code.str)
-	mrb_result = get_value(mrb_content)
+	mrb_result = get_value(mrb, mrb_content)
 	C.mrb_close(mrb)
 
 	return mrb_result
 }
 
-fn get_value(value C.mrb_value) string {
+fn get_value(mrb C.mrb_state, value C.mrb_value) string {
 	if C.mrb_string_p(value) {
 		return unsafe { C.RSTRING_PTR(value).vstring() }
 	}
@@ -67,10 +69,20 @@ fn get_value(value C.mrb_value) string {
 	else if C.mrb_float_p(value) {
 		return C.mrb_float(value).str()
 	}
-	// else if C.mrb_array_p(value) {
-	// 	return C.RARRAY_LEN(value).str()
-	// 	// return unsafe { C.RARRAY_LEN(value).vstring() }
-	// }
+	else if C.mrb_array_p(value) {
+		mut result := ""
+		len := C.RARRAY_LEN(value)
+		for i := 0; i < len; i++ {
+			str_value := C.mrb_ary_ref( mrb, value, i )
+			result += get_value(mrb, str_value)
+
+			if i != len - 1 {
+				result += ";"
+			}
+		}
+
+		return result
+	}
 	else {
 		bool_v := C.mrb_bool(value)
 		return if bool_v == 0 { "false" } else { "true" }
