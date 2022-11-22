@@ -6,6 +6,7 @@ dist/mrb_api
 *.so
 *.dylib
 *.dll
+lib
 
 # Ignore common editor/system specific metadata
 .DS_Store

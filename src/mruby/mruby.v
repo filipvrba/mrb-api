@@ -1,8 +1,11 @@
 // mruby format - https://qiita.com/liveralmask/items/1322a23d4fecb3690be6
+// The 'libmruby.a' file created during the compilation of Mruby must be stored in the 'lib' subdirectory.
 
-module main
+module mruby
 
-#flag -L/home/filip/.local/lib/mruby-3.1.0/build/host/lib -I/home/filip/.local/lib/mruby-3.1.0/include -I/home/filip/.local/lib/mruby-3.1.0/build/host/include -I/home/filip/.local/lib/mruby-3.1.0/mrbgems/mruby-time/include -I/home/filip/.local/lib/mruby-3.1.0/mrbgems/mruby-io/include -lm /home/filip/.local/lib/mruby-3.1.0/build/host/lib/libmruby.a -lm
+#flag -L @VMODROOT/lib
+#flag -I @VMODROOT/include
+#flag @VMODROOT/lib/libmruby.a -lm
 #include "mruby.h"
 #include "mruby/compile.h"
 #include "mruby/string.h"
@@ -48,7 +51,7 @@ fn C.mrb_array_p(C.mrb_value) bool
 fn C.mrb_array_p(C.mrb_value) bool
 fn C.mrb_ary_ref(C.mrb_state, C.mrb_value, int) C.mrb_value
 
-fn mrb_code(mrb_code string) string {
+pub fn mrb_code(mrb_code string) string {
 	mut mrb := C.mrb_open()
 	mut mrb_result := ""
 	

@@ -1,4 +1,4 @@
-module main
+module src
 
 import vweb
 
@@ -6,7 +6,7 @@ struct App {
     vweb.Context
 }
 
-fn main() {
+pub fn main() {
 	vweb.run_at(new_app(), vweb.RunParams{
         port: 8081
     }) or { panic(err) }
