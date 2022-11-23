@@ -50,6 +50,7 @@ fn C.mrb_float(C.mrb_value) f32
 fn C.mrb_array_p(C.mrb_value) bool
 fn C.mrb_array_p(C.mrb_value) bool
 fn C.mrb_ary_ref(C.mrb_state, C.mrb_value, int) C.mrb_value
+fn C.mrb_string_cstr(&C.mrb_state, C.mrb_value) &u8
 
 pub fn mrb_code(mrb_code string) string {
 	mut mrb := C.mrb_open()
@@ -62,9 +63,9 @@ pub fn mrb_code(mrb_code string) string {
 	return mrb_result
 }
 
-fn get_value(mrb C.mrb_state, value C.mrb_value) string {
+fn get_value(mrb &C.mrb_state, value C.mrb_value) string {
 	if C.mrb_string_p(value) {
-		return unsafe { C.RSTRING_PTR(value).vstring() }
+		return unsafe{ tos_clone( C.mrb_string_cstr(mrb, value) ) }
 	}
 	else if C.mrb_fixnum_p( value ) {
 		return C.mrb_fixnum(value).str()

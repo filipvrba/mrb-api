@@ -10,7 +10,7 @@ RUN git clone https://github.com/mruby/mruby.git /opt/mruby && rake && \
 
 WORKDIR /app
 COPY . .
-RUN mkdir bin && /opt/vlang/v -o bin/mrb_api app.v
+RUN mkdir bin && /opt/vlang/v -prod -o bin/mrb_api app.v
 
 FROM alpine AS runtime
 
