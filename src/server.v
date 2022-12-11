@@ -1,9 +1,11 @@
 module src
 
 import vweb
+import os
 
 const (
 	port = 8080
+    mrbapi_token = os.environ()["MRBAPI_TOKEN"]
 )
 
 struct App {

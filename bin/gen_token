@@ -1,0 +1,14 @@
+#!/usr/bin/env ruby
+
+def generate_token(arg)
+  length = arg.to_i
+  if length == 0
+    length = 40
+  end
+
+  chars = Array('A'..'Z') + Array('a'..'z') + Array(0..9)
+  token = Array.new(length) { chars.sample }.join
+  return token
+end
+
+p generate_token(ARGV[0])
