@@ -1,5 +1,5 @@
 # Mrb API
-The "*vweb*" module of the V programming language is used in this project.
+The "*vweb*" module of the [V programming language](https://vlang.io/) is used in this project.
 The project uses *HTTP* to communicate with *MRuby*, which is implemented. 
 
 ### Content
