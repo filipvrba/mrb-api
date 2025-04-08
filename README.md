@@ -2,6 +2,8 @@
 The "*vweb*" module of the [V programming language](https://vlang.io/) is used in this project.
 The project uses *HTTP* to communicate with *MRuby*, which is implemented. 
 
+**Please note that this repository is now archived and no longer actively maintained.**
+
 ### Content
 - [1 Usage](#1-usage)
   - [1.1 Token](#11-token)
@@ -14,10 +16,6 @@ The project uses *HTTP* to communicate with *MRuby*, which is implemented.
 This *API* can be used by entering a *URL* to access it.
 The application's *API* host name must be present in the link *URL*,
 followed by an access token and a *Ruby* script.
-
-> ### Info
-> A public web application is Mrb API.
-> To access it, enter the URL **https://mrbapi.fly.dev/**.
 
 ### 1.1 Token
 There is no requirement to register anyplace, and the access token is public.
